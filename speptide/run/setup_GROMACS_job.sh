@@ -15,6 +15,12 @@ GROMACS_BOXSIZE="9.5"
 GROMACS_BOXCENTER="4.75"
 
 #Setup GROMACS Job. Probably not necessary to edit past this point.
+if [ -z "$GROMACS_PDB" ]; then
+    echo "USAGE: ./setup_GROMACS_job.sh pdb_filename"
+    echo "Do NOT include the .pdb extension in the file name."
+    exit
+fi
+
 echo "Converting PDB to GMX format and setting water model and force field types" >  GROMACS-$GROMACS_PDB.out 2>&1
 
 pdb2gmx -ignh -ff $GROMACS_FORCEFIELD -water $GROMACS_WATERMODEL \
