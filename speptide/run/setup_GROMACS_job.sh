@@ -3,7 +3,7 @@
 #This script needs to be edited for each run.
 #Define PDB Filename & GROMACS Pameters
 #Remember to set up your mdp files prior to running this script:
-#for i in `ls ../MDP_Files/ | grep .mdp` ; do ln -s ../MDP_Files/$i . ; done
+# find  ../MDP_Files -name *.mdp -exec ln -s {} . \;
 
 GROMACS_PDB=$1
 GROMACS_FORCEFIELD="gromos53a6"
