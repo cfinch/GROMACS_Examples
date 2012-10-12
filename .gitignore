@@ -2,3 +2,15 @@
 *.swp
 ~*
 \#*
+*.edr
+*.gro
+*.log
+*.tpr
+*.trr
+*.cpt
+*.out
+*.top
+*.itp
+GROMACS_MD.e*
+GROMACS_MD.o*
+*.dat
