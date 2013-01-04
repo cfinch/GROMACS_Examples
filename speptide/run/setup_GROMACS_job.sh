@@ -2,8 +2,6 @@
 
 #This script needs to be edited for each run.
 #Define PDB Filename & GROMACS Pameters
-#Remember to set up your mdp files prior to running this script:
-# find  ../MDP_Files -name *.mdp -exec ln -s {} . \;
 
 GROMACS_PDB=$1
 GROMACS_FORCEFIELD="gromos53a6"
@@ -20,6 +18,9 @@ if [ -z "$GROMACS_PDB" ]; then
     echo "Do NOT include the .pdb extension in the file name."
     exit
 fi
+
+# Create symlinks to MDP files
+find  ../MDP_Files -name *.mdp -exec ln -s {} . \;
 
 echo "Converting PDB to GMX format and setting water model and force field types" >  GROMACS-$GROMACS_PDB.out 2>&1
 
@@ -45,7 +46,7 @@ if [ -n "$CHARGE" ]; then
 
     echo "Neutralizing any latent charge left from initial solvation." >> GROMACS-$GROMACS_PDB.out 2>&1
 
-    grompp -f MINIM-DEFAULT.mdp -c $GROMACS_PDB-solv.gro -p topol.top -o ions.tpr >> GROMACS-$GROMACS_PDB.out 2>&1
+    grompp -f energy_minimization.mdp -c $GROMACS_PDB-solv.gro -p topol.top -o ions.tpr >> GROMACS-$GROMACS_PDB.out 2>&1
 
     echo "Choose Group 13: SOL"
     genion -s ions.tpr -o $GROMACS_PDB-solv-ions.gro -p topol.top -pname NA -nname CL -n$PNN $IONS
@@ -58,5 +59,5 @@ else
 fi
 
 echo "Preprocessing GROMACS Configuration" >> GROMACS-$GROMACS_PDB.out
-grompp -f MINIM-DEFAULT.mdp -c $GROMACS_PDB-solv-ions.gro -p topol.top -maxwarn 3 -v -o em.tpr
+grompp -f energy_minimization.mdp -c $GROMACS_PDB-solv-ions.gro -p topol.top -maxwarn 3 -v -o em.tpr
 
