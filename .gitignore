@@ -7,10 +7,15 @@
 *.log
 *.tpr
 *.trr
+*.xtc
 *.cpt
 *.out
 *.top
 *.itp
-GROMACS_MD.e*
-GROMACS_MD.o*
+GROMACS.e*
+GROMACS.o*
 *.dat
+*.xvg
+*.eps
+*.png
+*.xpm
